@@ -1,0 +1,292 @@
+{
+  "project": "邱小亮双核心个人IP营销型H5网站",
+  "version": "1.0.0",
+  "tech_stack": {
+    "framework": "Astro 5.x",
+    "styling": "Tailwind CSS 4.x",
+    "cms": "TinaCMS",
+    "ai_chat": "Dify API",
+    "form": "Formspree",
+    "analytics": "Umami (可选)",
+    "deployment": "Vercel"
+  },
+  "color_scheme": {
+    "primary": "#F59E0B",
+    "secondary": "#10B981",
+    "background": "#FFFBF5",
+    "text_primary": "#1F2937",
+    "text_secondary": "#6B7280"
+  },
+  "features": [
+    {
+      "id": "F001",
+      "category": "基础架构",
+      "description": "Astro项目初始化与基础配置",
+      "priority": "critical",
+      "steps": [
+        "创建Astro项目 (npm create astro@latest)",
+        "配置Tailwind CSS",
+        "配置TinaCMS",
+        "设置响应式断点 (mobile/tablet/desktop)",
+        "配置SEO基础meta",
+        "验证开发服务器启动 (npm run dev)"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F002",
+      "category": "基础架构",
+      "description": "全局布局组件开发",
+      "priority": "critical",
+      "steps": [
+        "创建Header组件（Logo + 导航栏）",
+        "创建Footer组件（联系方式 + 版权 + 个人标签）",
+        "创建BaseLayout布局",
+        "实现移动端汉堡菜单",
+        "验证布局响应式"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F003",
+      "category": "首屏Banner",
+      "description": "Hero区域 - 双核心定位展示",
+      "priority": "critical",
+      "steps": [
+        "核心头衔展示：企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者",
+        "辅助头衔（浅灰小字）：数据资产管理师 | 17年AI+大健康+数字化转型实战",
+        "核心价值主标题：用AI落地能力+数字化思维...",
+        "核心价值副标题：17年政企项目/AI产品/大健康慢病实战经验...",
+        "双转化按钮：企业AI咨询 + 健康管理咨询",
+        "背景装饰：AI代码流+健康数据折线元素",
+        "验证PC和移动端视觉效果"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F004",
+      "category": "关于我",
+      "description": "双核心能力展示模块",
+      "priority": "critical",
+      "steps": [
+        "模块标题：关于我 | 让AI落地企业，让健康有数据支撑",
+        "核心能力1区域：企业AI智能体实施部署（含履历支撑内容）",
+        "核心能力2区域：心脑血管健康数字化管理（含履历支撑内容）",
+        "通用能力支撑区域",
+        "PC端左右分栏布局",
+        "移动端上下排版布局",
+        "验证内容完整性和响应式"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F005",
+      "category": "博客专栏",
+      "description": "博客列表与分类展示",
+      "priority": "high",
+      "steps": [
+        "模块标题：博客专栏 | AI落地干货，健康管理方法",
+        "三大分类标签切换",
+        "分类1：企业AI智能体实施落地（4篇初始文章）",
+        "分类2：心脑血管健康数字化管理（4篇初始文章）",
+        "分类3：AI+心脑血管健康融合实践（3篇初始文章）",
+        "博客卡片组件（标题+摘要+封面图）",
+        "移动端分类滑动支持",
+        "验证分类切换和内容展示"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F006",
+      "category": "博客专栏",
+      "description": "博客详情页",
+      "priority": "high",
+      "steps": [
+        "Markdown/MDX内容渲染",
+        "图文排版样式",
+        "返回博客列表导航",
+        "相关文章推荐",
+        "验证页面渲染和导航"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F007",
+      "category": "服务货架",
+      "description": "三大核心服务展示",
+      "priority": "critical",
+      "steps": [
+        "模块标题：我的服务 | 定制化方案，让AI落地，让健康有数",
+        "服务1卡片：企业AI智能体定制化实施部署",
+        "服务2卡片：心脑血管健康数字化管理方案",
+        "服务3卡片：AI+心脑血管健康融合解决方案",
+        "每个服务专属图标",
+        "转化按钮：定制XX方案",
+        "卡片悬停效果",
+        "验证卡片响应式布局"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F008",
+      "category": "案例成果",
+      "description": "三维度案例展示",
+      "priority": "high",
+      "steps": [
+        "模块标题：案例成果 | 用落地结果，证明核心能力",
+        "维度1：企业AI智能体实施落地案例（2个）",
+        "维度2：心脑血管健康数字化管理案例（2个）",
+        "维度3：AI+心脑血管健康融合实践案例（1个）",
+        "卡片设计：背景+做法+结果",
+        "验证内容完整性和布局"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F009",
+      "category": "AI咨询",
+      "description": "悬浮AI智能咨询组件 (Dify API)",
+      "priority": "high",
+      "steps": [
+        "悬浮按钮设计（右下角，暖橙色）",
+        "聊天窗口UI组件",
+        "Dify API集成",
+        "系统提示词配置",
+        "对话消息渲染（用户/AI区分）",
+        "引导预约表单功能",
+        "加载状态和错误处理",
+        "验证AI对话完整流程"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F010",
+      "category": "预约表单",
+      "description": "1v1专属咨询预约表单 (Formspree)",
+      "priority": "critical",
+      "steps": [
+        "表单标题：1v1专属咨询预约 | 企业AI/健康管理，精准对接",
+        "姓名输入框（必填）",
+        "联系电话输入框（必填，格式验证）",
+        "咨询需求下拉选择（4个选项）",
+        "额外备注文本框（选填）",
+        "Formspree API集成",
+        "提交成功/失败提示",
+        "简单防刷（honey pot字段）",
+        "验证表单完整提交流程"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F011",
+      "category": "底部模块",
+      "description": "Footer信息展示",
+      "priority": "medium",
+      "steps": [
+        "个人标签：企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者 | 数据资产管理师",
+        "合作咨询说明文字",
+        "联系方式：17326050425 + qxl5918@126.com",
+        "版权信息：©2025 邱小亮",
+        "验证Footer响应式布局"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F012",
+      "category": "SEO优化",
+      "description": "搜索引擎优化配置",
+      "priority": "high",
+      "steps": [
+        "核心关键词配置",
+        "Meta title/description动态生成",
+        "Open Graph标签（微信/微博分享）",
+        "结构化数据 JSON-LD (Person)",
+        "sitemap.xml自动生成",
+        "robots.txt配置",
+        "验证SEO配置正确性"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F013",
+      "category": "性能优化",
+      "description": "首屏加载优化",
+      "priority": "high",
+      "steps": [
+        "图片WebP格式 + 懒加载",
+        "CSS/JS压缩",
+        "字体优化（系统字体优先，思源黑体备用）",
+        "首屏加载时间≤2秒验证",
+        "Lighthouse性能评分≥85"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F014",
+      "category": "响应式适配",
+      "description": "PC+平板+移动端全适配",
+      "priority": "critical",
+      "steps": [
+        "PC端（≥1024px）完整布局验证",
+        "平板端（768px-1023px）布局验证",
+        "移动端（<768px）布局验证",
+        "Chrome/Safari/Firefox兼容测试",
+        "iOS Safari特殊处理",
+        "验证各端交互一致性"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F015",
+      "category": "CMS配置",
+      "description": "TinaCMS内容管理配置",
+      "priority": "medium",
+      "steps": [
+        "TinaCMS初始化配置",
+        "博客文章Collection定义",
+        "案例Collection定义",
+        "服务Collection定义",
+        "全局配置（联系方式等）",
+        "验证CMS后台可正常编辑内容"
+      ],
+      "passes": false
+    },
+    {
+      "id": "F016",
+      "category": "部署",
+      "description": "生产环境部署 (Vercel)",
+      "priority": "medium",
+      "steps": [
+        "Vercel项目配置",
+        "环境变量配置（Dify API Key, Formspree ID）",
+        "构建命令配置",
+        "部署验证",
+        "HTTPS验证",
+        "自定义域名配置（如有）"
+      ],
+      "passes": false
+    }
+  ],
+  "statistics": {
+    "total": 16,
+    "completed": 0,
+    "in_progress": 0,
+    "pending": 16,
+    "by_category": {
+      "基础架构": 2,
+      "首屏Banner": 1,
+      "关于我": 1,
+      "博客专栏": 2,
+      "服务货架": 1,
+      "案例成果": 1,
+      "AI咨询": 1,
+      "预约表单": 1,
+      "底部模块": 1,
+      "SEO优化": 1,
+      "性能优化": 1,
+      "响应式适配": 1,
+      "CMS配置": 1,
+      "部署": 1
+    }
+  }
+}
