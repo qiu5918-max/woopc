@@ -8,9 +8,9 @@
 
 ## 功能进度概览
 - 总功能数：16
-- 已完成：1
+- 已完成：2
 - 进行中：0
-- 待开发：15
+- 待开发：14
 
 ---
 
@@ -26,16 +26,23 @@
 - [x] 创建 feature_list.json 功能列表（16个功能）
 - [x] 创建 DEV_GUIDE.md 开发规范文档
 - [x] F001: Astro项目初始化与基础配置 ✅
+- [x] F002: 全局布局组件开发 ✅
 
 #### 验证结果
+F001:
 - npm run build 构建成功
-- 生成 dist/index.html
-- sitemap-index.xml 已生成
 - Tailwind CSS 3.x 配置完成
 - TinaCMS 配置文件创建完成
 
+F002:
+- Header组件（Logo + 导航栏 + 移动端汉堡菜单）
+- Footer组件（三栏布局：个人信息 + 核心定位 + 联系方式）
+- BaseLayout集成Header/Footer
+- 移动端菜单JS交互实现
+- 构建验证通过
+
 #### 下一步
-- [ ] F002: 全局布局组件开发
+- [ ] F003: Hero区域 - 双核心定位展示
 
 #### 备注
 技术栈确认：
@@ -47,10 +54,10 @@
 - 部署：Vercel
 
 ---
-## 当前状态：F001 完成，准备开始 F002
+## 当前状态：F002 完成，F003 已在 index.astro 中初步实现
 
 下一个 Coding Agent 请：
 1. 读取本文件了解进度
-2. 读取 feature_list.json 获取 F002 详情
-3. 开发 Header/Footer 组件
+2. F003 Hero区域已在 index.astro 中实现，需验证
+3. 继续 F004-F008 内容模块开发
 4. 完成后更新本文件并 git commit

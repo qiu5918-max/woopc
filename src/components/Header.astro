@@ -1,0 +1,115 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const navItems = [
+  { href: '#about', label: '关于我' },
+  { href: '#blog', label: '博客' },
+  { href: '#services', label: '服务' },
+  { href: '#cases', label: '案例' },
+];
+---
+
+<header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-border/50">
+  <div class="container py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 group">
+      <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-lg transition-transform group-hover:scale-105">
+        邱
+      </div>
+      <span class="text-lg font-bold text-text-primary hidden sm:block">邱小亮</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="text-text-secondary hover:text-primary transition-colors duration-200 text-sm font-medium"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href="#contact"
+        class="btn btn-primary text-sm px-5"
+      >
+        立即咨询
+      </a>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button
+      id="mobile-menu-btn"
+      class="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+      aria-label="打开菜单"
+    >
+      <svg class="w-6 h-6 text-text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden bg-white border-t border-border/50"
+  >
+    <nav class="container py-4 flex flex-col gap-3">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="mobile-nav-link text-text-secondary hover:text-primary hover:bg-primary/5 px-4 py-3 rounded-lg transition-colors duration-200"
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href="#contact"
+        class="btn btn-primary text-sm mx-4 mt-2"
+      >
+        立即咨询
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-icon-open');
+  const closeIcon = document.getElementById('menu-icon-close');
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+  if (menuBtn && mobileMenu && openIcon && closeIcon) {
+    menuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-label', '打开菜单');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        openIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        menuBtn.setAttribute('aria-label', '关闭菜单');
+      }
+    });
+
+    // 点击导航链接后关闭菜单
+    mobileNavLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        menuBtn.setAttribute('aria-label', '打开菜单');
+      });
+    });
+  }
+</script>

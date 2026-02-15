@@ -3,146 +3,196 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="邱小亮">
-  <div slot="header">
-    <!-- Header组件占位 -->
-    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border">
-      <div class="container py-4 flex items-center justify-between">
-        <a href="/" class="text-xl font-bold text-text-primary">
-          邱小亮
-        </a>
-        <nav class="hidden md:flex items-center gap-6">
-          <a href="#about" class="text-text-secondary hover:text-primary transition-colors">关于我</a>
-          <a href="#blog" class="text-text-secondary hover:text-primary transition-colors">博客</a>
-          <a href="#services" class="text-text-secondary hover:text-primary transition-colors">服务</a>
-          <a href="#cases" class="text-text-secondary hover:text-primary transition-colors">案例</a>
-          <a href="#contact" class="btn btn-primary text-sm">立即咨询</a>
-        </nav>
-        <!-- 移动端菜单按钮 -->
-        <button class="md:hidden p-2" aria-label="菜单">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </header>
-  </div>
+  <!-- Hero Section -->
+  <section class="section bg-gradient-to-b from-white to-background relative overflow-hidden">
+    <!-- 背景装饰：AI代码流 + 健康数据折线 -->
+    <div class="absolute inset-0 opacity-5">
+      <svg class="w-full h-full" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 代码流线条 -->
+        <path d="M0 100 Q300 50 600 100 T1200 100" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.5"/>
+        <path d="M0 200 Q300 150 600 200 T1200 200" stroke="#F59E0B" stroke-width="2" fill="none" opacity="0.3"/>
+        <path d="M0 300 Q300 250 600 300 T1200 300" stroke="#10B981" stroke-width="2" fill="none" opacity="0.5"/>
+        <path d="M0 400 Q300 350 600 400 T1200 400" stroke="#10B981" stroke-width="2" fill="none" opacity="0.3"/>
+        <!-- 数据点 -->
+        <circle cx="200" cy="100" r="4" fill="#F59E0B"/>
+        <circle cx="400" cy="150" r="4" fill="#F59E0B"/>
+        <circle cx="600" cy="100" r="4" fill="#10B981"/>
+        <circle cx="800" cy="200" r="4" fill="#10B981"/>
+        <circle cx="1000" cy="150" r="4" fill="#F59E0B"/>
+      </svg>
+    </div>
 
-  <!-- Hero Section 占位 -->
-  <section class="section bg-gradient-to-b from-white to-background">
-    <div class="container text-center">
-      <p class="text-text-secondary mb-2">数据资产管理师 | 17年AI+大健康+数字化转型实战</p>
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-        企业AI智能体实施部署专家<br/>
+    <div class="container text-center relative z-10">
+      <!-- 辅助头衔 -->
+      <p class="text-text-secondary text-sm md:text-base mb-3">
+        数据资产管理师 | 17年AI+大健康+数字化转型实战
+      </p>
+
+      <!-- 核心头衔 -->
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+        <span class="text-text-primary">企业AI智能体实施部署专家</span>
+        <br />
         <span class="text-secondary">心脑血管健康数字化管理实践者</span>
       </h1>
-      <p class="text-lg text-text-secondary max-w-2xl mx-auto mb-8">
+
+      <!-- 核心价值主标题 -->
+      <p class="text-lg md:text-xl text-text-primary font-medium mb-3 max-w-3xl mx-auto">
         用AI落地能力+数字化思维，做企业AI智能体部署与心脑血管健康管理
       </p>
+
+      <!-- 核心价值副标题 -->
+      <p class="text-base md:text-lg text-text-secondary max-w-2xl mx-auto mb-10">
+        17年政企项目/AI产品/大健康慢病实战经验，让企业AI落地有方法，心脑血管健康管理有数据
+      </p>
+
+      <!-- 双转化按钮 -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="#contact" class="btn btn-primary">企业AI咨询</a>
-        <a href="#contact" class="btn btn-secondary">健康管理咨询</a>
+        <a href="#contact" class="btn btn-primary px-8 py-3 text-base">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+          企业AI咨询
+        </a>
+        <a href="#contact" class="btn btn-secondary px-8 py-3 text-base">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          健康管理咨询
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- 关于我占位 -->
+  <!-- 关于我 Section -->
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title text-center">关于我</h2>
-      <p class="section-subtitle text-center mb-12">让AI落地企业，让健康有数据支撑</p>
+      <div class="text-center mb-12">
+        <h2 class="section-title">关于我</h2>
+        <p class="section-subtitle">让AI落地企业，让健康有数据支撑</p>
+      </div>
+
       <div class="text-center text-text-secondary">
         <p>内容开发中...</p>
       </div>
     </div>
   </section>
 
-  <!-- 博客占位 -->
+  <!-- 博客 Section -->
   <section id="blog" class="section bg-white">
     <div class="container">
-      <h2 class="section-title text-center">博客专栏</h2>
-      <p class="section-subtitle text-center mb-12">AI落地干货，健康管理方法</p>
+      <div class="text-center mb-12">
+        <h2 class="section-title">博客专栏</h2>
+        <p class="section-subtitle">AI落地干货，健康管理方法</p>
+      </div>
+
       <div class="text-center text-text-secondary">
         <p>内容开发中...</p>
       </div>
     </div>
   </section>
 
-  <!-- 服务占位 -->
+  <!-- 服务 Section -->
   <section id="services" class="section">
     <div class="container">
-      <h2 class="section-title text-center">我的服务</h2>
-      <p class="section-subtitle text-center mb-12">定制化方案，让AI落地，让健康有数</p>
+      <div class="text-center mb-12">
+        <h2 class="section-title">我的服务</h2>
+        <p class="section-subtitle">定制化方案，让AI落地，让健康有数</p>
+      </div>
+
       <div class="text-center text-text-secondary">
         <p>内容开发中...</p>
       </div>
     </div>
   </section>
 
-  <!-- 案例占位 -->
+  <!-- 案例 Section -->
   <section id="cases" class="section bg-white">
     <div class="container">
-      <h2 class="section-title text-center">案例成果</h2>
-      <p class="section-subtitle text-center mb-12">用落地结果，证明核心能力</p>
+      <div class="text-center mb-12">
+        <h2 class="section-title">案例成果</h2>
+        <p class="section-subtitle">用落地结果，证明核心能力</p>
+      </div>
+
       <div class="text-center text-text-secondary">
         <p>内容开发中...</p>
       </div>
     </div>
   </section>
 
-  <!-- 联系表单占位 -->
-  <section id="contact" class="section">
+  <!-- 联系表单 Section -->
+  <section id="contact" class="section bg-gradient-to-b from-background to-white">
     <div class="container">
-      <h2 class="section-title text-center">1v1专属咨询预约</h2>
-      <p class="section-subtitle text-center mb-12">企业AI/健康管理，精准对接</p>
+      <div class="text-center mb-12">
+        <h2 class="section-title">1v1专属咨询预约</h2>
+        <p class="section-subtitle">企业AI/健康管理，精准对接</p>
+      </div>
+
       <div class="max-w-md mx-auto">
-        <form class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium mb-1">姓名 *</label>
-            <input type="text" name="name" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+        <form class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+          <div class="space-y-5">
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">姓名 *</label>
+              <input
+                type="text"
+                name="name"
+                required
+                placeholder="请输入您的姓名"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">联系电话 *</label>
+              <input
+                type="tel"
+                name="phone"
+                required
+                placeholder="请输入您的手机号"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              />
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">咨询需求 *</label>
+              <select
+                name="service_type"
+                required
+                class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all bg-white"
+              >
+                <option value="">请选择咨询类型</option>
+                <option value="ai">企业AI智能体部署</option>
+                <option value="health">心脑血管健康管理</option>
+                <option value="fusion">AI+大健康融合</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-text-primary mb-2">额外备注</label>
+              <textarea
+                name="message"
+                rows="3"
+                placeholder="请简要描述您的需求（选填）"
+                class="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+              ></textarea>
+            </div>
+
+            <!-- Honey pot 防刷 -->
+            <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" />
+
+            <button
+              type="submit"
+              class="btn btn-primary w-full py-3 text-base"
+            >
+              提交预约
+            </button>
           </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">联系电话 *</label>
-            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">咨询需求 *</label>
-            <select name="service_type" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
-              <option value="">请选择</option>
-              <option value="ai">企业AI智能体部署</option>
-              <option value="health">心脑血管健康管理</option>
-              <option value="fusion">AI+大健康融合</option>
-              <option value="other">其他</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-medium mb-1">额外备注</label>
-            <textarea name="message" rows="3" class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary w-full">提交预约</button>
+
+          <p class="text-center text-text-secondary text-xs mt-4">
+            预约提交后，邱小亮会在1个工作日内联系您
+          </p>
         </form>
       </div>
     </div>
   </section>
-
-  <div slot="footer">
-    <footer class="bg-text-primary text-white py-8">
-      <div class="container">
-        <div class="text-center">
-          <p class="text-lg font-medium mb-2">邱小亮</p>
-          <p class="text-gray-400 text-sm mb-4">
-            企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者 | 数据资产管理师
-          </p>
-          <p class="text-gray-400 text-sm mb-4">
-            承接企业AI智能体定制部署、心脑血管健康数字化管理、AI+大健康融合解决方案
-          </p>
-          <p class="text-gray-500 text-sm">
-            电话：17326050425 | 邮箱：qxl5918@126.com
-          </p>
-          <p class="text-gray-600 text-xs mt-4">
-            ©2025 邱小亮 企业AI智能体+心脑血管健康双核心个人IP All Rights Reserved
-          </p>
-        </div>
-      </div>
-    </footer>
-  </div>
 </BaseLayout>

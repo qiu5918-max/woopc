@@ -1,0 +1,88 @@
+---
+const currentYear = new Date().getFullYear();
+
+const tags = [
+  '企业AI智能体实施部署专家',
+  '心脑血管健康数字化管理实践者',
+  '数据资产管理师',
+];
+
+const contactInfo = {
+  phone: '17326050425',
+  email: 'qxl5918@126.com',
+};
+---
+
+<footer class="bg-text-primary text-white">
+  <div class="container py-12">
+    <!-- 主内容区 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <!-- 个人信息 -->
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-white font-bold text-lg">
+            邱
+          </div>
+          <span class="text-xl font-bold">邱小亮</span>
+        </div>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          承接企业AI智能体定制部署、心脑血管健康数字化管理、AI+大健康融合解决方案的定制与落地，欢迎政企/企业/大健康机构洽谈合作。
+        </p>
+      </div>
+
+      <!-- 个人标签 -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">核心定位</h3>
+        <ul class="space-y-2">
+          {tags.map((tag) => (
+            <li class="flex items-center gap-2 text-gray-400 text-sm">
+              <span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+              {tag}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- 联系方式 -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">联系方式</h3>
+        <ul class="space-y-3">
+          <li>
+            <a
+              href={`tel:${contactInfo.phone}`}
+              class="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              <span>{contactInfo.phone}</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${contactInfo.email}`}
+              class="flex items-center gap-3 text-gray-400 hover:text-primary transition-colors"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>{contactInfo.email}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 分隔线 -->
+    <div class="border-t border-gray-700 pt-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        <p class="text-gray-500 text-xs">
+          ©{currentYear} 邱小亮 企业AI智能体+心脑血管健康双核心个人IP All Rights Reserved
+        </p>
+        <p class="text-gray-600 text-xs">
+          用AI落地能力+数字化思维，做企业AI智能体部署与心脑血管健康管理
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
