@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "tech_stack": {
     "framework": "Astro 5.x",
-    "styling": "Tailwind CSS 4.x",
+    "styling": "Tailwind CSS 3.x",
     "cms": "TinaCMS",
     "ai_chat": "Dify API",
     "form": "Formspree",
@@ -31,7 +31,8 @@
         "配置SEO基础meta",
         "验证开发服务器启动 (npm run dev)"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F002",
@@ -269,9 +270,9 @@
   ],
   "statistics": {
     "total": 16,
-    "completed": 0,
+    "completed": 1,
     "in_progress": 0,
-    "pending": 16,
+    "pending": 15,
     "by_category": {
       "基础架构": 2,
       "首屏Banner": 1,

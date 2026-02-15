@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="邱小亮">
+  <div slot="header">
+    <!-- Header组件占位 -->
+    <header class="bg-white/80 backdrop-blur-sm sticky top-0 z-50 border-b border-border">
+      <div class="container py-4 flex items-center justify-between">
+        <a href="/" class="text-xl font-bold text-text-primary">
+          邱小亮
+        </a>
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="#about" class="text-text-secondary hover:text-primary transition-colors">关于我</a>
+          <a href="#blog" class="text-text-secondary hover:text-primary transition-colors">博客</a>
+          <a href="#services" class="text-text-secondary hover:text-primary transition-colors">服务</a>
+          <a href="#cases" class="text-text-secondary hover:text-primary transition-colors">案例</a>
+          <a href="#contact" class="btn btn-primary text-sm">立即咨询</a>
+        </nav>
+        <!-- 移动端菜单按钮 -->
+        <button class="md:hidden p-2" aria-label="菜单">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero Section 占位 -->
+  <section class="section bg-gradient-to-b from-white to-background">
+    <div class="container text-center">
+      <p class="text-text-secondary mb-2">数据资产管理师 | 17年AI+大健康+数字化转型实战</p>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+        企业AI智能体实施部署专家<br/>
+        <span class="text-secondary">心脑血管健康数字化管理实践者</span>
+      </h1>
+      <p class="text-lg text-text-secondary max-w-2xl mx-auto mb-8">
+        用AI落地能力+数字化思维，做企业AI智能体部署与心脑血管健康管理
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#contact" class="btn btn-primary">企业AI咨询</a>
+        <a href="#contact" class="btn btn-secondary">健康管理咨询</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我占位 -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">关于我</h2>
+      <p class="section-subtitle text-center mb-12">让AI落地企业，让健康有数据支撑</p>
+      <div class="text-center text-text-secondary">
+        <p>内容开发中...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 博客占位 -->
+  <section id="blog" class="section bg-white">
+    <div class="container">
+      <h2 class="section-title text-center">博客专栏</h2>
+      <p class="section-subtitle text-center mb-12">AI落地干货，健康管理方法</p>
+      <div class="text-center text-text-secondary">
+        <p>内容开发中...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 服务占位 -->
+  <section id="services" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">我的服务</h2>
+      <p class="section-subtitle text-center mb-12">定制化方案，让AI落地，让健康有数</p>
+      <div class="text-center text-text-secondary">
+        <p>内容开发中...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例占位 -->
+  <section id="cases" class="section bg-white">
+    <div class="container">
+      <h2 class="section-title text-center">案例成果</h2>
+      <p class="section-subtitle text-center mb-12">用落地结果，证明核心能力</p>
+      <div class="text-center text-text-secondary">
+        <p>内容开发中...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系表单占位 -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title text-center">1v1专属咨询预约</h2>
+      <p class="section-subtitle text-center mb-12">企业AI/健康管理，精准对接</p>
+      <div class="max-w-md mx-auto">
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">姓名 *</label>
+            <input type="text" name="name" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">联系电话 *</label>
+            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">咨询需求 *</label>
+            <select name="service_type" required class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+              <option value="">请选择</option>
+              <option value="ai">企业AI智能体部署</option>
+              <option value="health">心脑血管健康管理</option>
+              <option value="fusion">AI+大健康融合</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">额外备注</label>
+            <textarea name="message" rows="3" class="w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full">提交预约</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <div slot="footer">
+    <footer class="bg-text-primary text-white py-8">
+      <div class="container">
+        <div class="text-center">
+          <p class="text-lg font-medium mb-2">邱小亮</p>
+          <p class="text-gray-400 text-sm mb-4">
+            企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者 | 数据资产管理师
+          </p>
+          <p class="text-gray-400 text-sm mb-4">
+            承接企业AI智能体定制部署、心脑血管健康数字化管理、AI+大健康融合解决方案
+          </p>
+          <p class="text-gray-500 text-sm">
+            电话：17326050425 | 邮箱：qxl5918@126.com
+          </p>
+          <p class="text-gray-600 text-xs mt-4">
+            ©2025 邱小亮 企业AI智能体+心脑血管健康双核心个人IP All Rights Reserved
+          </p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</BaseLayout>

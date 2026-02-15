@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Qiu's Personal Website - Development Server Starter
-# Usage: ./init.sh
+# 邱小亮个人网站 - 开发服务器启动脚本
 
-echo "Starting Qiu's Personal Website development server..."
+echo "🚀 启动邱小亮个人网站开发服务器..."
 
-# TODO: Add actual development server commands after tech stack is decided
-# Example for Next.js:
-# npm run dev
+# 检查node_modules是否存在
+if [ ! -d "node_modules" ]; then
+    echo "📦 首次运行，正在安装依赖..."
+    npm install
+fi
 
-# Example for static site:
-# npx serve .
-
-echo "Init script ready. Tech stack to be determined."
+# 启动开发服务器
+echo "🌟 启动Astro开发服务器..."
+npm run dev
