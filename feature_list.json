@@ -163,7 +163,8 @@
         "加载状态和错误处理",
         "验证AI对话完整流程"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F010",
@@ -181,7 +182,8 @@
         "简单防刷（honey pot字段）",
         "验证表单完整提交流程"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F011",
@@ -275,9 +277,9 @@
   ],
   "statistics": {
     "total": 16,
-    "completed": 6,
+    "completed": 8,
     "in_progress": 0,
-    "pending": 10,
+    "pending": 8,
     "by_category": {
       "基础架构": 2,
       "首屏Banner": 1,

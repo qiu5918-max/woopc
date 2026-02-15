@@ -1,0 +1,290 @@
+---
+// AI Chat组件 - 悬浮聊天窗口
+// 注意：Dify API Key 需要在环境变量中配置
+---
+
+<div id="ai-chat-widget" class="fixed bottom-6 right-6 z-50">
+  <!-- 悬浮按钮 -->
+  <button
+    id="chat-toggle-btn"
+    class="w-14 h-14 bg-primary hover:bg-primary/90 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-105"
+    aria-label="AI智能咨询"
+  >
+    <svg id="chat-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+    </svg>
+    <svg id="close-icon" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+
+  <!-- 未读消息提示 -->
+  <span id="unread-badge" class="hidden absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+    1
+  </span>
+
+  <!-- 聊天窗口 -->
+  <div
+    id="chat-window"
+    class="hidden absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl overflow-hidden border border-border/20"
+  >
+    <!-- 头部 -->
+    <div class="bg-primary px-4 py-3 text-white">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <p class="font-medium text-sm">邱小亮AI顾问</p>
+          <p class="text-xs text-white/80">企业AI · 健康管理咨询</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 消息区域 -->
+    <div id="chat-messages" class="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50">
+      <!-- 欢迎消息 -->
+      <div class="flex gap-2">
+        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="bg-white rounded-xl rounded-tl-none px-3 py-2 shadow-sm max-w-[80%]">
+          <p class="text-sm text-text-primary">
+            你好～我是邱小亮的专属AI顾问，专注<span class="text-primary font-medium">企业AI智能体落地</span>与<span class="text-secondary font-medium">心脑血管健康数字化管理</span>。请问你想咨询哪方面的问题？
+          </p>
+        </div>
+      </div>
+
+      <!-- 快捷问题按钮 -->
+      <div class="flex flex-wrap gap-2">
+        <button class="quick-question text-xs bg-white border border-primary/30 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-colors">
+          企业AI部署
+        </button>
+        <button class="quick-question text-xs bg-white border border-secondary/30 text-secondary px-3 py-1.5 rounded-full hover:bg-secondary hover:text-white transition-colors">
+          健康管理咨询
+        </button>
+        <button class="quick-question text-xs bg-white border border-primary/30 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-colors">
+          服务价格
+        </button>
+      </div>
+    </div>
+
+    <!-- 输入区域 -->
+    <div class="p-3 bg-white border-t border-border/20">
+      <form id="chat-form" class="flex gap-2">
+        <input
+          type="text"
+          id="chat-input"
+          placeholder="输入你的问题..."
+          class="flex-1 px-3 py-2 text-sm border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          autocomplete="off"
+        />
+        <button
+          type="submit"
+          id="send-btn"
+          class="px-4 py-2 bg-primary text-white text-sm rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          发送
+        </button>
+      </form>
+      <p class="text-xs text-text-secondary mt-2 text-center">
+        或 <a href="#contact" class="text-primary hover:underline">直接预约1v1咨询</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 聊天状态
+  let isOpen = false;
+  let conversationId = '';
+  const sessionId = 'session-' + Math.random().toString(36).substr(2, 9);
+
+  // DOM元素
+  const toggleBtn = document.getElementById('chat-toggle-btn');
+  const chatWindow = document.getElementById('chat-window');
+  const chatIcon = document.getElementById('chat-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const chatMessages = document.getElementById('chat-messages');
+  const chatForm = document.getElementById('chat-form');
+  const chatInput = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('send-btn');
+  const quickQuestions = document.querySelectorAll('.quick-question');
+  const unreadBadge = document.getElementById('unread-badge');
+
+  // 切换聊天窗口
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      isOpen = !isOpen;
+      chatWindow?.classList.toggle('hidden', !isOpen);
+      chatIcon?.classList.toggle('hidden', isOpen);
+      closeIcon?.classList.toggle('hidden', !isOpen);
+      unreadBadge?.classList.add('hidden');
+
+      if (isOpen) {
+        chatInput?.focus();
+      }
+    });
+  }
+
+  // 快捷问题点击
+  quickQuestions.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const question = btn.textContent?.trim() || '';
+      if (chatInput) {
+        chatInput.value = question;
+      }
+      chatForm?.dispatchEvent(new Event('submit'));
+    });
+  });
+
+  // 发送消息
+  if (chatForm) {
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = chatInput?.value.trim();
+      if (!message) return;
+
+      // 添加用户消息
+      addMessage(message, 'user');
+      if (chatInput) chatInput.value = '';
+
+      // 显示加载状态
+      const loadingId = addLoadingMessage();
+      if (sendBtn) sendBtn.disabled = true;
+
+      try {
+        // 调用Dify API（如果配置了的话）
+        const response = await callDifyAPI(message);
+
+        // 移除加载消息
+        removeLoadingMessage(loadingId);
+
+        // 添加AI回复
+        addMessage(response, 'ai');
+      } catch (error) {
+        removeLoadingMessage(loadingId);
+        addMessage('抱歉，网络有点问题，请稍后再试或直接预约1v1咨询。', 'ai');
+      }
+
+      if (sendBtn) sendBtn.disabled = false;
+    });
+  }
+
+  // 添加消息到聊天窗口
+  function addMessage(content: string, type: 'user' | 'ai') {
+    const messageDiv = document.createElement('div');
+
+    if (type === 'user') {
+      messageDiv.className = 'flex gap-2 justify-end';
+      messageDiv.innerHTML = `
+        <div class="bg-primary text-white rounded-xl rounded-tr-none px-3 py-2 shadow-sm max-w-[80%]">
+          <p class="text-sm">${content}</p>
+        </div>
+      `;
+    } else {
+      messageDiv.className = 'flex gap-2';
+      messageDiv.innerHTML = `
+        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div class="bg-white rounded-xl rounded-tl-none px-3 py-2 shadow-sm max-w-[80%]">
+          <p class="text-sm text-text-primary">${content}</p>
+        </div>
+      `;
+    }
+
+    chatMessages?.appendChild(messageDiv);
+    chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+  }
+
+  // 添加加载消息
+  function addLoadingMessage(): string {
+    const loadingId = 'loading-' + Date.now();
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = loadingId;
+    loadingDiv.className = 'flex gap-2';
+    loadingDiv.innerHTML = `
+      <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-primary animate-spin" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
+      <div class="bg-white rounded-xl rounded-tl-none px-3 py-2 shadow-sm">
+        <p class="text-sm text-text-secondary">正在思考中...</p>
+      </div>
+    `;
+    chatMessages?.appendChild(loadingDiv);
+    chatMessages?.scrollTo({ top: chatMessages.scrollHeight, behavior: 'smooth' });
+    return loadingId;
+  }
+
+  // 移除加载消息
+  function removeLoadingMessage(id: string) {
+    document.getElementById(id)?.remove();
+  }
+
+  // 调用Dify API
+  async function callDifyAPI(message: string): Promise<string> {
+    // 获取API配置
+    const apiUrl = import.meta.env.DIFY_API_URL || '';
+    const apiKey = import.meta.env.DIFY_API_KEY || '';
+
+    // 如果没有配置API，返回模拟回复
+    if (!apiUrl || !apiKey) {
+      return getSimulatedResponse(message);
+    }
+
+    try {
+      const response = await fetch(`${apiUrl}/chat-messages`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: message,
+          user: sessionId,
+          conversation_id: conversationId,
+          inputs: {},
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.conversation_id) {
+        conversationId = data.conversation_id;
+      }
+
+      return data.answer || '抱歉，我没理解您的问题。可以直接预约邱小亮的1v1咨询获取详细解答。';
+    } catch {
+      return getSimulatedResponse(message);
+    }
+  }
+
+  // 模拟回复（无API时的备用）
+  function getSimulatedResponse(message: string): string {
+    const lowerMessage = message.toLowerCase();
+
+    if (lowerMessage.includes('ai') || lowerMessage.includes('智能体') || lowerMessage.includes('企业')) {
+      return '企业AI智能体部署是我们的核心服务，邱小亮会为企业定制全流程落地方案，包含需求调研、方案定制、技术落地、团队培训。要预约1v1咨询获取定制方案吗？';
+    }
+
+    if (lowerMessage.includes('健康') || lowerMessage.includes('心脑血管') || lowerMessage.includes('血压')) {
+      return '心脑血管健康数字化管理是通过数据监测+个性化方案实现的，邱小亮会根据您的身体数据和生活习惯定制专属方案。点击下方「直接预约1v1咨询」获取定制方案吧！';
+    }
+
+    if (lowerMessage.includes('价格') || lowerMessage.includes('费用') || lowerMessage.includes('多少钱')) {
+      return '服务价格根据需求定制，企业AI部署和健康管理方案不同。建议预约1v1咨询，邱小亮会根据您的具体情况提供详细方案和报价。';
+    }
+
+    return '感谢您的咨询！邱小亮是17年AI+大健康实战专家，专注企业AI智能体落地与心脑血管健康管理。您可以点击下方「直接预约1v1咨询」获取专属方案。';
+  }
+</script>
