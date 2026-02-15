@@ -1,0 +1,224 @@
+---
+// 博客文章数据（后续可通过CMS管理）
+const blogPosts = [
+  {
+    id: 1,
+    title: '企业AI智能体部署避坑：别让技术脱节业务',
+    description: '企业落地AI智能体最常见的错误就是技术与业务脱节。本文分享5个实战经验，帮你避开这些坑。',
+    category: 'ai-enterprise',
+    date: '2025-01-15',
+    image: '/images/blog/ai-1.jpg',
+    slug: 'ai-deployment-pitfalls'
+  },
+  {
+    id: 2,
+    title: '从0到1落地企业AI智能体，这5步缺一不可',
+    description: '基于多个企业AI项目落地经验，总结出完整的5步落地流程，让企业AI部署有章可循。',
+    category: 'ai-enterprise',
+    date: '2025-01-10',
+    image: '/images/blog/ai-2.jpg',
+    slug: 'ai-deployment-steps'
+  },
+  {
+    id: 3,
+    title: '政企单位AI智能体部署的合规与落地要点',
+    description: '政企单位部署AI智能体有哪些合规要求？本文详解数据安全、流程规范等关键要点。',
+    category: 'ai-enterprise',
+    date: '2025-01-05',
+    image: '/images/blog/ai-3.jpg',
+    slug: 'government-ai-compliance'
+  },
+  {
+    id: 4,
+    title: 'AI智能体落地后，如何让团队真正用起来？',
+    description: 'AI工具部署成功只是第一步，让团队真正用起来才是关键。分享实用的培训与推广方法。',
+    category: 'ai-enterprise',
+    date: '2024-12-28',
+    image: '/images/blog/ai-4.jpg',
+    slug: 'ai-team-adoption'
+  },
+  {
+    id: 5,
+    title: '心脑血管健康管理：用数据代替经验，精准监测',
+    description: '告别"感觉式"健康管理，用数据化思维建立科学的心脑血管健康监测体系。',
+    category: 'health-cardiovascular',
+    date: '2025-01-12',
+    image: '/images/blog/health-1.jpg',
+    slug: 'data-driven-health'
+  },
+  {
+    id: 6,
+    title: '上班族心脑血管健康数字化方案，适配加班/外卖场景',
+    description: '工作忙碌也能管理好心脑血管健康？这套数字化方案专为上班族设计，每天只需5分钟。',
+    category: 'health-cardiovascular',
+    date: '2025-01-08',
+    image: '/images/blog/health-2.jpg',
+    slug: 'office-worker-health'
+  },
+  {
+    id: 7,
+    title: '心脑血管慢病管理：3个核心数据，每天5分钟监测',
+    description: '血压、血脂、心率，这3个数据是心脑血管健康的"晴雨表"。教你如何正确监测和记录。',
+    category: 'health-cardiovascular',
+    date: '2025-01-03',
+    image: '/images/blog/health-3.jpg',
+    slug: 'core-health-metrics'
+  },
+  {
+    id: 8,
+    title: 'AI工具加持，让心脑血管健康监测更高效',
+    description: 'AI工具如何帮助心脑血管健康管理？分享几款实用的健康监测工具和使用技巧。',
+    category: 'health-cardiovascular',
+    date: '2024-12-25',
+    image: '/images/blog/health-4.jpg',
+    slug: 'ai-health-tools'
+  },
+  {
+    id: 9,
+    title: '企业员工心脑血管健康管理：AI智能体的落地应用',
+    description: '如何用AI智能体帮助企业实现员工心脑血管健康管理？分享实际项目案例和落地经验。',
+    category: 'ai-health-fusion',
+    date: '2025-01-14',
+    image: '/images/blog/fusion-1.jpg',
+    slug: 'corporate-health-ai'
+  },
+  {
+    id: 10,
+    title: '大健康机构如何用AI智能体提升健康管理效率',
+    description: '健康机构咨询量大、效率低？AI智能体可以自动化处理大量常见健康咨询，释放人力。',
+    category: 'ai-health-fusion',
+    date: '2025-01-06',
+    image: '/images/blog/fusion-2.jpg',
+    slug: 'health-org-ai'
+  },
+  {
+    id: 11,
+    title: '数据化思维，让AI+心脑血管健康管理更有结果',
+    description: 'AI和健康管理的结合，核心是数据化思维。用数据驱动决策，让健康管理更科学。',
+    category: 'ai-health-fusion',
+    date: '2024-12-20',
+    image: '/images/blog/fusion-3.jpg',
+    slug: 'data-thinking-health'
+  }
+];
+
+const categories = [
+  { id: 'all', label: '全部文章' },
+  { id: 'ai-enterprise', label: '企业AI智能体实施落地' },
+  { id: 'health-cardiovascular', label: '心脑血管健康数字化管理' },
+  { id: 'ai-health-fusion', label: 'AI+心脑血管健康融合' }
+];
+---
+
+<section id="blog" class="section">
+  <div class="container">
+    <!-- 标题 -->
+    <div class="text-center mb-12">
+      <h2 class="section-title">博客专栏</h2>
+      <p class="section-subtitle">AI落地干货，健康管理方法</p>
+    </div>
+
+    <!-- 分类标签 -->
+    <div class="flex flex-wrap justify-center gap-2 mb-10 overflow-x-auto pb-2">
+      {categories.map((cat, index) => (
+        <button
+          data-category={cat.id}
+          class={`blog-category-btn px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+            index === 0
+              ? 'bg-primary text-white'
+              : 'bg-gray-100 text-text-secondary hover:bg-gray-200'
+          }`}
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- 博客卡片网格 -->
+    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {blogPosts.map((post) => (
+        <article
+          data-category={post.category}
+          class="blog-card card group cursor-pointer hover:shadow-lg transition-all duration-300"
+        >
+          <!-- 封面图 -->
+          <div class="relative h-48 bg-gray-100 rounded-lg mb-4 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+              <svg class="w-12 h-12 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+              </svg>
+            </div>
+            <!-- 分类标签 -->
+            <span class={`absolute top-3 left-3 px-2 py-1 text-xs rounded-full ${
+              post.category === 'ai-enterprise' ? 'bg-primary text-white' :
+              post.category === 'health-cardiovascular' ? 'bg-secondary text-white' :
+              'bg-gradient-to-r from-primary to-secondary text-white'
+            }`}>
+              {categories.find(c => c.id === post.category)?.label.slice(0, 6) || ''}
+            </span>
+          </div>
+
+          <!-- 文章信息 -->
+          <div>
+            <h3 class="text-base font-semibold text-text-primary mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+              {post.title}
+            </h3>
+            <p class="text-sm text-text-secondary line-clamp-2 mb-3">
+              {post.description}
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-text-secondary">{post.date}</span>
+              <span class="text-xs text-primary font-medium group-hover:underline">阅读全文 →</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- 查看更多 -->
+    <div class="text-center mt-10">
+      <button class="btn btn-outline">
+        查看更多文章
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // 分类筛选功能
+  const categoryBtns = document.querySelectorAll('.blog-category-btn');
+  const blogCards = document.querySelectorAll('.blog-card');
+
+  categoryBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+
+      // 更新按钮样式
+      categoryBtns.forEach((b) => {
+        b.classList.remove('bg-primary', 'text-white');
+        b.classList.add('bg-gray-100', 'text-text-secondary');
+      });
+      btn.classList.remove('bg-gray-100', 'text-text-secondary');
+      btn.classList.add('bg-primary', 'text-white');
+
+      // 筛选卡片
+      blogCards.forEach((card) => {
+        const cardCategory = card.getAttribute('data-category');
+        if (category === 'all' || cardCategory === category) {
+          (card as HTMLElement).style.display = 'block';
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

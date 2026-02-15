@@ -98,7 +98,8 @@
         "移动端分类滑动支持",
         "验证分类切换和内容展示"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F006",
@@ -197,7 +198,8 @@
         "版权信息：©2025 邱小亮",
         "验证Footer响应式布局"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F012",
@@ -277,9 +279,9 @@
   ],
   "statistics": {
     "total": 16,
-    "completed": 8,
+    "completed": 10,
     "in_progress": 0,
-    "pending": 8,
+    "pending": 6,
     "by_category": {
       "基础架构": 2,
       "首屏Banner": 1,
