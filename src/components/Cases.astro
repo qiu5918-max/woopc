@@ -1,0 +1,153 @@
+---
+const caseCategories = [
+  {
+    id: 'ai-enterprise',
+    title: '企业AI智能体实施落地',
+    cases: [
+      {
+        title: '某制造企业AI智能体落地',
+        background: '某制造企业需落地AI智能体提升办公效率，存在"技术与业务脱节、团队不会用"的痛点',
+        approach: '深度调研业务场景 → 定制轻量化AI智能体方案 → 落地实施+数据打通 → 团队实操培训',
+        results: [
+          { label: '办公效率提升', value: '40%' },
+          { label: 'AI工具使用率', value: '95%' },
+          { label: '目标达成', value: '技术服务业务' }
+        ]
+      },
+      {
+        title: '某政府产业园区AI+数字化',
+        background: '某政府产业园区需落地AI智能体优化招商与企业服务，存在"数据割裂、服务效率低"的痛点',
+        approach: '整合园区数据 → 定制招商/企业服务AI智能体 → 合规落地+系统对接',
+        results: [
+          { label: '企业对接效率提升', value: '50%' },
+          { label: '数据管理效率提升', value: '60%' },
+          { label: '项目荣誉', value: '区域数字化示范' }
+        ]
+      }
+    ],
+    support: '依托2500万级数字化转型项目、672万级智能系统项目的资源整合、落地执行能力'
+  },
+  {
+    id: 'health-management',
+    title: '心脑血管健康数字化管理',
+    cases: [
+      {
+        title: '个人心脑血管慢病管理',
+        background: '45岁上班族，高血压（心脑血管高危因素），工作繁忙，无时间做系统健康管理',
+        approach: '数据化监测（血压+血脂核心指标） → 定制适配上班族的饮食/作息方案 → 数字化打卡+30天跟进',
+        results: [
+          { label: '30天血压', value: '稳定正常' },
+          { label: '每日监测习惯', value: '5分钟/天' },
+          { label: '掌握能力', value: '自主健康管理' }
+        ]
+      },
+      {
+        title: '企业员工健康管理',
+        background: '某企业需为员工做心脑血管健康管理，存在"人数多、需求分散、管理效率低"的痛点',
+        approach: '定制企业员工健康数字化体系 → AI工具辅助监测 → 批量健康方案定制+一对一答疑',
+        results: [
+          { label: '健康知晓率提升', value: '80%' },
+          { label: '高危人群方案覆盖', value: '100%' },
+          { label: '员工满意度', value: '90%+' }
+        ]
+      }
+    ],
+    support: '基于数据资产管理师专业能力，打造数据驱动的健康管理体系'
+  },
+  {
+    id: 'ai-health-fusion',
+    title: 'AI+心脑血管健康融合实践',
+    cases: [
+      {
+        title: '大健康机构AI智能化升级',
+        background: '某大健康机构需提升心脑血管健康管理效率，存在"人工咨询量大、方案定制慢"的痛点',
+        approach: '为机构定制AI智能体 → 实现健康咨询自动化+初步方案定制智能化 → 健康数据打通与监测',
+        results: [
+          { label: '咨询效率提升', value: '70%' },
+          { label: '方案定制时间缩短', value: '80%' },
+          { label: '服务用户量提升', value: '60%' },
+          { label: '运营成本降低', value: '30%' }
+        ]
+      }
+    ],
+    support: 'AI+大健康双核心能力融合，实现技术与业务的深度结合'
+  }
+];
+---
+
+<section id="cases" class="section bg-white">
+  <div class="container">
+    <!-- 标题 -->
+    <div class="text-center mb-12">
+      <h2 class="section-title">案例成果</h2>
+      <p class="section-subtitle">用落地结果，证明核心能力</p>
+    </div>
+
+    <!-- 案例分类 -->
+    {caseCategories.map((category, catIndex) => (
+      <div class="mb-12 last:mb-0">
+        <!-- 分类标题 -->
+        <div class="flex items-center gap-3 mb-6">
+          <div class={`w-10 h-10 rounded-lg flex items-center justify-center ${
+            catIndex === 0 ? 'bg-primary/10 text-primary' :
+            catIndex === 1 ? 'bg-secondary/10 text-secondary' :
+            'bg-gradient-to-br from-primary/10 to-secondary/10 text-primary'
+          }`}>
+            <span class="text-lg font-bold">{catIndex + 1}</span>
+          </div>
+          <h3 class="text-lg font-bold text-text-primary">{category.title}</h3>
+        </div>
+
+        <!-- 案例卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {category.cases.map((caseItem) => (
+            <div class="card hover:shadow-lg transition-shadow duration-300">
+              <!-- 案例标题 -->
+              <h4 class="text-base font-semibold text-text-primary mb-4">{caseItem.title}</h4>
+
+              <!-- 项目背景 -->
+              <div class="mb-4">
+                <p class="text-xs font-medium text-text-secondary mb-1">项目背景</p>
+                <p class="text-sm text-text-secondary leading-relaxed">{caseItem.background}</p>
+              </div>
+
+              <!-- 核心做法 -->
+              <div class="mb-4">
+                <p class="text-xs font-medium text-text-secondary mb-1">核心做法</p>
+                <p class="text-sm text-text-secondary leading-relaxed">{caseItem.approach}</p>
+              </div>
+
+              <!-- 落地结果 -->
+              <div class="pt-4 border-t border-border/50">
+                <p class="text-xs font-medium text-text-secondary mb-3">落地结果</p>
+                <div class="flex flex-wrap gap-3">
+                  {caseItem.results.map((result) => (
+                    <div class="bg-background rounded-lg px-3 py-2">
+                      <p class="text-xs text-text-secondary">{result.label}</p>
+                      <p class={`text-sm font-bold ${
+                        catIndex === 0 ? 'text-primary' :
+                        catIndex === 1 ? 'text-secondary' :
+                        'text-primary'
+                      }`}>{result.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- 能力支撑说明 -->
+        <p class="text-xs text-text-secondary mt-4 pl-13">
+          <span class="font-medium">能力支撑：</span>{category.support}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .pl-13 {
+    padding-left: 3.25rem;
+  }
+</style>
