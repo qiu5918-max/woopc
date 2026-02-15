@@ -215,7 +215,8 @@
         "robots.txt配置",
         "验证SEO配置正确性"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F013",
@@ -279,9 +280,9 @@
   ],
   "statistics": {
     "total": 16,
-    "completed": 10,
+    "completed": 11,
     "in_progress": 0,
-    "pending": 6,
+    "pending": 5,
     "by_category": {
       "基础架构": 2,
       "首屏Banner": 1,

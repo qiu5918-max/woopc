@@ -1,0 +1,21 @@
+# 邱小亮个人网站 robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://qiuxiaoliang.com/sitemap-index.xml
+
+# 禁止访问的路径
+Disallow: /admin/
+Disallow: /api/
+
+# 允许所有搜索引擎抓取
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
