@@ -1,0 +1,164 @@
+---
+const services = [
+  {
+    id: 'ai-deployment',
+    title: '企业AI智能体定制化实施部署',
+    target: '中小企业/政企单位/大健康机构',
+    value: '从需求到落地，全流程定制企业专属AI智能体，解决"技术与业务脱节、落地难、不会用"的痛点',
+    contents: [
+      '企业AI需求深度调研（业务痛点+落地场景+团队能力）',
+      'AI智能体方案定制（功能设计+技术选型+合规把控）',
+      'AI智能体落地实施（技术对接+系统调试+数据打通）',
+      '团队实操培训（线下/线上培训+操作手册+14天答疑）',
+      '落地效果复盘（数据监测+方案优化+后续升级建议）'
+    ],
+    deliverables: [
+      '企业专属AI智能体部署方案',
+      '可落地的AI智能体产品',
+      '团队培训手册',
+      '14天免费答疑',
+      '效果复盘报告'
+    ],
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>`,
+    color: 'primary'
+  },
+  {
+    id: 'health-management',
+    title: '心脑血管健康数字化管理方案',
+    target: '心脑血管慢病人群、上班族、关注健康的个人/家庭',
+    value: '用数据化思维定制专属健康方案，让心脑血管健康管理可监测、可落地、可坚持',
+    contents: [
+      '1v1健康调研（身体数据+生活习惯+健康痛点）',
+      '数据化健康分析（核心指标监测+问题根源拆解）',
+      '专属健康方案定制（饮食+作息+运动+监测全维度）',
+      '数字化监测工具指导（数据记录+趋势分析+异常提醒）',
+      '30天健康跟进（实时答疑+方案调整+习惯养成指导）'
+    ],
+    deliverables: [
+      '心脑血管健康数字化管理手册',
+      '专属健康方案',
+      '数据监测模板',
+      '30天免费跟进',
+      '健康趋势分析报告'
+    ],
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>`,
+    color: 'secondary'
+  },
+  {
+    id: 'ai-health-fusion',
+    title: 'AI+心脑血管健康融合解决方案',
+    target: '大健康机构、企业（员工健康管理）、社区健康服务中心',
+    value: '将AI智能体与心脑血管健康管理结合，打造智能化、数字化的健康管理体系，提升效率与服务质量',
+    contents: [
+      '机构健康管理痛点调研（服务流程+用户需求+效率瓶颈）',
+      'AI+健康融合方案定制（AI智能体功能设计+健康数据打通）',
+      '方案落地实施（AI工具部署+健康管理系统对接）',
+      '工作人员实操培训+用户使用指导',
+      '长期效果优化（数据复盘+功能迭代+服务升级）'
+    ],
+    deliverables: [
+      'AI+心脑血管健康融合方案',
+      'AI智能体落地产品',
+      '健康管理系统对接文档',
+      '培训手册',
+      '长期优化服务'
+    ],
+    icon: `<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
+    </svg>`,
+    color: 'accent'
+  }
+];
+---
+
+<section id="services" class="section">
+  <div class="container">
+    <!-- 标题 -->
+    <div class="text-center mb-12">
+      <h2 class="section-title">我的服务</h2>
+      <p class="section-subtitle">定制化方案，让AI落地，让健康有数</p>
+    </div>
+
+    <!-- 服务卡片 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+      {services.map((service, index) => (
+        <div class="card group hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+          <!-- 卡片头部 -->
+          <div class={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 ${
+            service.color === 'primary' ? 'bg-primary/10 text-primary' :
+            service.color === 'secondary' ? 'bg-secondary/10 text-secondary' :
+            'bg-gradient-to-br from-primary/10 to-secondary/10 text-primary'
+          }`}>
+            <Fragment set:html={service.icon} />
+          </div>
+
+          <!-- 服务标题 -->
+          <h3 class="text-lg font-bold text-text-primary mb-2 group-hover:text-primary transition-colors">
+            {service.title}
+          </h3>
+
+          <!-- 服务对象 -->
+          <p class="text-xs text-text-secondary mb-4">
+            <span class="font-medium">服务对象：</span>{service.target}
+          </p>
+
+          <!-- 核心价值 -->
+          <p class="text-sm text-text-secondary mb-6 leading-relaxed flex-grow">
+            {service.value}
+          </p>
+
+          <!-- 服务内容 -->
+          <div class="mb-6">
+            <p class="text-xs font-medium text-text-primary mb-3">服务内容：</p>
+            <ul class="space-y-2">
+              {service.contents.slice(0, 3).map((content) => (
+                <li class="flex items-start gap-2 text-xs text-text-secondary">
+                  <svg class={`w-4 h-4 flex-shrink-0 mt-0.5 ${
+                    service.color === 'primary' ? 'text-primary' :
+                    service.color === 'secondary' ? 'text-secondary' :
+                    'text-primary'
+                  }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                  <span>{content}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- 交付成果 -->
+          <div class="mb-6 pt-4 border-t border-border/50">
+            <p class="text-xs font-medium text-text-primary mb-2">交付成果：</p>
+            <div class="flex flex-wrap gap-2">
+              {service.deliverables.slice(0, 3).map((item) => (
+                <span class={`text-xs px-2 py-1 rounded ${
+                  service.color === 'primary' ? 'bg-primary/5 text-primary' :
+                  service.color === 'secondary' ? 'bg-secondary/5 text-secondary' :
+                  'bg-primary/5 text-text-secondary'
+                }`}>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- 转化按钮 -->
+          <a
+            href="#contact"
+            class={`btn w-full text-sm ${
+              service.color === 'primary' ? 'btn-primary' :
+              service.color === 'secondary' ? 'btn-secondary' :
+              'btn-primary'
+            }`}
+          >
+            定制方案
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
