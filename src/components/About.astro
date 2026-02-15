@@ -1,0 +1,124 @@
+---
+const coreCapabilities = [
+  {
+    id: 'ai',
+    title: '企业AI智能体实施部署',
+    subtitle: '实战派，落地为核心',
+    description: '懂战略、能落地的企业AI智能体实施部署专家，擅长从需求拆解→方案定制→技术落地→效果复盘的全流程闭环',
+    highlights: [
+      {
+        title: '17年AI产品/数字化转型/政企项目实战',
+        content: '历任科技公司总经理/上市公司高级产品经理，独立具备AIGC编程、AI Agent搭建能力，主导多款SaaS产品规划、AI智能工具落地'
+      },
+      {
+        title: '深耕政企合作10年',
+        content: '主导2500万级数字化转型项目、672万级智能系统落地项目，懂企业/政府AI落地的合规要求、资源整合、团队协同'
+      },
+      {
+        title: '技术+数据+业务三维支撑',
+        content: '持有系统架构设计师、全国首批数据资产管理师资质，能解决企业AI智能体部署中「技术与业务脱节、落地难、效果差」的核心痛点'
+      },
+      {
+        title: 'AI工具培训经验丰富',
+        content: '曾搭建AI工具培训体系，学员满意度90%+，能为企业提供AI智能体落地后的团队培训、操作指导'
+      }
+    ],
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>`
+  },
+  {
+    id: 'health',
+    title: '心脑血管健康数字化管理',
+    subtitle: '产品化思维，数据为核心',
+    description: '用产品经理逻辑+数字化思维做心脑血管健康管理，擅长将复杂的健康管理转化为可落地、可监测、可复制的数字化方案',
+    highlights: [
+      {
+        title: '深耕大健康慢病赛道多年',
+        content: '主导慢病赛道产品矩阵梳理、大健康渠道拓展与私域运营，对接微医等千万级流量平台，懂心脑血管健康管理的行业痛点、用户需求'
+      },
+      {
+        title: '数据资产管理师专业能力',
+        content: '将数据化分析融入心脑血管健康管理，打造「数据监测→问题分析→方案定制→效果追踪」的数字化管理体系'
+      },
+      {
+        title: '17年产品思维沉淀',
+        content: '擅长将心脑血管健康管理产品化拆解，把饮食、作息、运动、监测等核心环节转化为企业/个人可执行的步骤'
+      },
+      {
+        title: 'AI+大健康融合实践经验',
+        content: '能将AI工具与心脑血管健康管理结合，打造AI辅助的健康监测、方案定制工具，提升健康管理效率'
+      }
+    ],
+    icon: `<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>`
+  }
+];
+
+const commonCapabilities = [
+  '连续创业者，带团队超30人，具备「战略规划→落地执行→结果复盘」的全周期管理能力',
+  '获重庆数据要素大赛金融赛道第一名、最佳产品奖等，具备极强的结果导向'
+];
+---
+
+<section id="about" class="section bg-white">
+  <div class="container">
+    <!-- 标题 -->
+    <div class="text-center mb-12">
+      <h2 class="section-title">关于我</h2>
+      <p class="section-subtitle">让AI落地企业，让健康有数据支撑</p>
+    </div>
+
+    <!-- 双核心能力 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      {coreCapabilities.map((capability) => (
+        <div class="card p-6 md:p-8 hover:shadow-xl transition-shadow duration-300">
+          <!-- 能力头部 -->
+          <div class="flex items-start gap-4 mb-6">
+            <div class={`w-14 h-14 rounded-xl flex items-center justify-center ${capability.id === 'ai' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'}`}>
+              <Fragment set:html={capability.icon} />
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-text-primary">{capability.title}</h3>
+              <p class="text-sm text-text-secondary">{capability.subtitle}</p>
+            </div>
+          </div>
+
+          <!-- 能力描述 -->
+          <p class="text-text-secondary mb-6 leading-relaxed">
+            {capability.description}
+          </p>
+
+          <!-- 履历支撑 -->
+          <div class="space-y-4">
+            {capability.highlights.map((highlight) => (
+              <div class="flex gap-3">
+                <div class={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${capability.id === 'ai' ? 'bg-primary' : 'bg-secondary'}`}></div>
+                <div>
+                  <p class="text-sm font-medium text-text-primary mb-1">{highlight.title}</p>
+                  <p class="text-xs text-text-secondary leading-relaxed">{highlight.content}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- 通用能力支撑 -->
+    <div class="bg-background rounded-xl p-6 md:p-8">
+      <h3 class="text-lg font-semibold text-text-primary mb-4 text-center">通用能力支撑</h3>
+      <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8">
+        {commonCapabilities.map((capability) => (
+          <div class="flex items-center gap-2 text-text-secondary text-sm">
+            <svg class="w-5 h-5 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{capability}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

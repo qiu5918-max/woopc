@@ -63,7 +63,8 @@
         "背景装饰：AI代码流+健康数据折线元素",
         "验证PC和移动端视觉效果"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F004",
@@ -79,7 +80,8 @@
         "移动端上下排版布局",
         "验证内容完整性和响应式"
       ],
-      "passes": false
+      "passes": true,
+      "completed_at": "2026-02-15"
     },
     {
       "id": "F005",
@@ -271,9 +273,9 @@
   ],
   "statistics": {
     "total": 16,
-    "completed": 2,
+    "completed": 4,
     "in_progress": 0,
-    "pending": 14,
+    "pending": 12,
     "by_category": {
       "基础架构": 2,
       "首屏Banner": 1,
