@@ -1,0 +1,22 @@
+# Qiu's Personal Website - Progress Log
+
+## Project Started: 2026-02-15
+
+### Methodology
+This project follows the "Effective Harnesses for Long-Running Agents" methodology:
+- Incremental feature development
+- Each session works on ONE feature at a time
+- All changes committed with descriptive messages
+- End-to-end testing before marking features complete
+
+### Session Log
+
+#### Session 1 - 2026-02-15
+- [INITIALIZER] Project created
+- [INITIALIZER] Git repository initialized
+- [INITIALIZER] Progress file created
+- [PENDING] Awaiting user's specific requirements to create feature list
+
+---
+## Status: WAITING FOR USER INPUT
+User will provide specific materials/requirements for the website.
