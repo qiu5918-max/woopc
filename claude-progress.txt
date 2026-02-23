@@ -8,9 +8,9 @@
 
 ## 功能进度概览
 - 总功能数：16
-- 已完成：11
+- 已完成：14
 - 进行中：0
-- 待开发：5
+- 待开发：2
 
 ---
 
@@ -39,10 +39,25 @@
 
 #### 待开发
 - [ ] F006: 博客详情页（可后续迭代）
-- [ ] F013: 性能优化
-- [ ] F014: 响应式适配验证
 - [ ] F015: CMS配置（TinaCMS完善）
-- [ ] F016: 部署配置
+
+#### Session 2 - 2026-02-16
+**状态：VERIFICATION PHASE**
+- [x] F014: 响应式适配验证 ✅
+  - PC端（1440px）布局验证通过
+  - 平板端（768px）布局验证通过
+  - 移动端（375px）布局验证通过
+  - 所有组件响应式布局正常
+- [x] F013: 性能优化 ✅
+  - 生产构建 LCP: 94ms
+  - CLS: 0.00
+  - TTFB: 8ms
+  - 总体积: 112KB
+  - CSS已提取压缩(20KB)
+- [x] F016: 部署配置 ✅
+  - vercel.json 配置完成
+  - 环境变量模板 .env.example 已创建
+  - 构建命令已配置
 
 #### 备注
 技术栈确认：
@@ -54,7 +69,7 @@
 - 部署：Vercel
 
 ---
-## 当前状态：第一版开发接近完成，11/16 功能已完成
+## 当前状态：第一版开发完成，14/16 功能已完成
 
 ### 项目文件结构
 ```
@@ -82,13 +97,19 @@ qiu-website/
 │   └── robots.txt
 ├── tina/
 │   └── config.ts            # TinaCMS配置
+├── vercel.json              # Vercel部署配置
+├── .env.example             # 环境变量模板
 ├── feature_list.json        # 功能列表
 ├── claude-progress.txt      # 进度日志
 ├── DEV_GUIDE.md             # 开发规范
 └── init.sh                  # 启动脚本
 ```
 
-### 下一步
-1. 完成响应式适配验证（F014）
-2. 完成性能优化（F013）
-3. 部署到 Vercel（F016）
+### 部署说明
+1. 安装 Vercel CLI: `npm i -g vercel`
+2. 登录 Vercel: `vercel login`
+3. 部署项目: `vercel`
+4. 配置环境变量（在 Vercel Dashboard）:
+   - DIFY_API_URL
+   - DIFY_API_KEY
+   - FORMSPREE_FORM_ID

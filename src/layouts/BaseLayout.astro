@@ -11,8 +11,8 @@ interface Props {
 
 const {
   title,
-  description = '邱小亮，企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者，17年AI+大健康+数字化转型实战经验',
-  keywords = '邱小亮,企业AI智能体实施部署,心脑血管健康数字化管理,AI落地,健康管理'
+  description = '邱小亮，企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者，系统架构师、数据资产管理师、海南岛AI健康大使，17年AI+大健康+数字化转型实战经验',
+  keywords = '邱小亮,企业AI智能体实施部署,心脑血管健康数字化管理,AI落地,健康管理,系统架构师,数据资产管理师,海南岛AI健康大使,数字文旅专家,创业导师'
 } = Astro.props;
 
 const siteName = '邱小亮';
@@ -49,11 +49,12 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "邱小亮",
-      "jobTitle": "企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者",
+      "jobTitle": "企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者 | 系统架构师 | 海南岛AI健康大使",
       "description": description,
       "url": Astro.site,
       "telephone": "17326050425",
       "email": "qxl5918@126.com",
+      "award": ["数据资产管理师", "基金从业资格证", "楼友会创业导师", "重庆市文化和旅游发展研究会数字文旅专业委员会专家顾问"],
       "sameAs": []
     })} />
   </head>

@@ -2,14 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 自定义CSS变量 */
+/* 自定义CSS变量 - 浅色模式 */
 :root {
   --color-primary: #F59E0B;
+  --color-primary-dark: #D97706;
   --color-secondary: #10B981;
+  --color-accent: #6366F1;
   --color-background: #FFFBF5;
+  --color-surface: #FFFFFF;
   --color-text-primary: #1F2937;
   --color-text-secondary: #6B7280;
   --color-border: #E5E7EB;
+  --gradient-primary: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+  --gradient-tech: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+}
+
+/* 深色模式 */
+.dark {
+  --color-primary: #FBBF24;
+  --color-primary-dark: #F59E0B;
+  --color-secondary: #34D399;
+  --color-accent: #818CF8;
+  --color-background: #0F172A;
+  --color-surface: #1E293B;
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-border: #334155;
+  --gradient-primary: linear-gradient(135deg, #818CF8 0%, #A78BFA 50%, #F472B6 100%);
+  --gradient-tech: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
 }
 
 /* 全局样式 */
@@ -22,6 +42,21 @@ body {
   color: var(--color-text-primary);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
   line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 科技感网格背景 */
+.tech-grid {
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+}
+
+.dark .tech-grid {
+  background-image:
+    linear-gradient(to right, rgba(99, 102, 241, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.15) 1px, transparent 1px);
 }
 
 /* 链接样式 */
@@ -32,7 +67,7 @@ a {
 }
 
 a:hover {
-  color: #D97706;
+  color: var(--color-primary-dark);
 }
 
 /* 按钮基础样式 */
@@ -40,31 +75,45 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   font-weight: 500;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .btn-primary {
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #D97706;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
 }
 
 .btn-secondary {
-  background-color: var(--color-secondary);
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #059669 100%);
   color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
 }
 
 .btn-secondary:hover {
-  background-color: #059669;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 .btn-outline {
@@ -127,21 +176,168 @@ a:hover {
   color: var(--color-text-secondary);
 }
 
-/* 卡片样式 */
+/* 卡片样式 - 科技感 */
 .card {
-  background: white;
-  border-radius: 0.75rem;
+  background: var(--color-surface);
+  border-radius: 1rem;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s ease;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
 }
 
 .card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-accent);
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+  transform: translateY(-4px);
+}
+
+.dark .card:hover {
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
+}
+
+/* 玻璃态效果 */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.dark .glass {
+  background: rgba(30, 41, 59, 0.8);
+}
+
+/* 渐变文字 */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* 科技感装饰 */
+.tech-decoration {
+  position: relative;
+}
+
+.tech-decoration::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+}
+
+.tech-decoration::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+}
+
+/* 数据可视化样式 */
+.data-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-accent);
+}
+
+.dark .data-badge {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* 图标容器 */
+.icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+}
+
+.icon-box-secondary {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, #059669 100%);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.icon-box-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #D97706 100%);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+/* 统计数字样式 */
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* 流动光效 */
+@keyframes flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.flow-gradient {
+  background: linear-gradient(-45deg, var(--color-accent), var(--color-primary), var(--color-secondary), var(--color-accent));
+  background-size: 400% 400%;
+  animation: flow 8s ease infinite;
 }
 
 /* 隐藏的honeypot字段（防刷） */
 .honeypot {
   position: absolute;
   left: -9999px;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* 选中文本样式 */
+::selection {
+  background: rgba(99, 102, 241, 0.3);
+  color: var(--color-text-primary);
 }
