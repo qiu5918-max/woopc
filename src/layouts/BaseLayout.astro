@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { CURRENT_SUBDOMAIN, API_BASE, getTenantConfig, getBrandColors } from '../lib/tenant-config';
 
 interface Props {
   title: string;
@@ -9,13 +10,17 @@ interface Props {
   keywords?: string;
 }
 
+// 获取租户配置
+const tenantConfig = await getTenantConfig(CURRENT_SUBDOMAIN);
+const brandColors = getBrandColors(tenantConfig?.brandConfig);
+
 const {
   title,
-  description = '邱小亮，企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者，系统架构师、数据资产管理师、海南岛AI健康大使，17年AI+大健康+数字化转型实战经验',
+  description = tenantConfig?.seoConfig?.description || '邱小亮，企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者，系统架构师、数据资产管理师、海南岛AI健康大使，17年AI+大健康+数字化转型实战经验',
   keywords = '邱小亮,企业AI智能体实施部署,心脑血管健康数字化管理,AI落地,健康管理,系统架构师,数据资产管理师,海南岛AI健康大使,数字文旅专家,创业导师'
 } = Astro.props;
 
-const siteName = '邱小亮';
+const siteName = tenantConfig?.name || '邱小亮';
 const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
 ---
 
@@ -44,17 +49,26 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- Brand Colors CSS Variables -->
+    <style is:inline set:html={`
+      :root {
+        --color-primary: ${brandColors.primary};
+        --color-secondary: ${brandColors.secondary};
+        --color-accent: ${brandColors.primary};
+      }
+    `} />
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "邱小亮",
-      "jobTitle": "企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者 | 系统架构师 | 海南岛AI健康大使",
+      "name": siteName,
+      "jobTitle": tenantConfig?.description || "企业AI智能体实施部署专家 | 心脑血管健康数字化管理实践者",
       "description": description,
       "url": Astro.site,
-      "telephone": "17326050425",
-      "email": "qxl5918@126.com",
-      "award": ["数据资产管理师", "基金从业资格证", "楼友会创业导师", "重庆市文化和旅游发展研究会数字文旅专业委员会专家顾问"],
+      "telephone": tenantConfig?.contactConfig?.phone || "",
+      "email": tenantConfig?.contactConfig?.email || "",
+      "award": [],
       "sameAs": []
     })} />
   </head>

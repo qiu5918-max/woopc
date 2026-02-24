@@ -1,8 +1,8 @@
 ---
-import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
+import { CURRENT_SUBDOMAIN, API_BASE, type CoreCapability, type Achievement } from '../lib/tenant-config';
 
 // 从 API 获取租户配置
-async function getSiteConfig() {
+async function getTenantConfig() {
   try {
     const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}`, {
       headers: { 'Content-Type': 'application/json' }
@@ -11,23 +11,8 @@ async function getSiteConfig() {
     const data = await res.json();
     return data.data;
   } catch (error) {
-    console.error('Failed to fetch site config:', error);
+    console.error('Failed to fetch tenant config:', error);
     return null;
-  }
-}
-
-// 从 API 获取服务数据（用于生成核心能力）
-async function getServices() {
-  try {
-    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/services`, {
-      headers: { 'Content-Type': 'application/json' }
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.data || [];
-  } catch (error) {
-    console.error('Failed to fetch services:', error);
-    return [];
   }
 }
 
@@ -46,8 +31,7 @@ async function getHonors() {
   }
 }
 
-const siteConfig = await getSiteConfig();
-const apiServices = await getServices();
+const tenantConfig = await getTenantConfig();
 const apiHonors = await getHonors();
 
 // 荣誉类型 emoji 映射
@@ -60,7 +44,7 @@ const honorTypeEmoji: Record<string, string> = {
 };
 
 // 默认核心能力（邱小亮）
-const defaultCoreCapabilities = [
+const defaultCoreCapabilities: CoreCapability[] = [
   {
     id: 'ai',
     title: '企业AI智能体',
@@ -91,31 +75,40 @@ const defaultCoreCapabilities = [
   }
 ];
 
-// 从服务数据生成核心能力
-function generateCoreCapabilities(services: any[]) {
-  if (services.length === 0) return defaultCoreCapabilities;
+// 恋恋的核心能力
+const lianlianCoreCapabilities: CoreCapability[] = [
+  {
+    id: 'anti-aging',
+    title: '女性全生命周期抗衰',
+    subtitle: '卵巢健康管理专家',
+    tagline: '以肠为根，以轴为核',
+    description: '从肠道→激素→神经→循环→免疫全身轴联动，重建卵巢健康内环境',
+    highlights: [
+      { icon: '❤️', label: 'AMH', text: '卵巢功能精准管理' },
+      { icon: '🦠', label: '肠道', text: '微生态修复专家' },
+      { icon: '📊', label: '动态', text: '可视化检测分析' },
+      { icon: '🤖', label: 'AI', text: '智能健康分析' }
+    ],
+    color: 'accent'
+  },
+  {
+    id: 'family-health',
+    title: '家庭健康规划',
+    subtitle: '院前长寿管理体系',
+    tagline: '一人学习，全家健康',
+    description: '从个人健康到家庭长寿，长期、科学、可传承的健康顶层设计',
+    highlights: [
+      { icon: '👨‍👩‍👧‍👦', label: '100+', text: '深度服务家庭' },
+      { icon: '🍳', label: '24年', text: '健康美食规划' },
+      { icon: '💪', label: '6年', text: '健康管理实战' },
+      { icon: '🚀', label: '11年', text: '连续创业经验' }
+    ],
+    color: 'secondary'
+  }
+];
 
-  return services.slice(0, 2).map((s: any, i: number) => ({
-    id: s.slug || `service-${i}`,
-    title: s.title,
-    subtitle: s.subtitle || '',
-    tagline: s.target?.substring(0, 20) || '专业服务',
-    description: s.value || '',
-    highlights: (s.highlights || []).slice(0, 4).map((h: string, j: number) => ({
-      icon: ['💼', '🏥', '📊', '🔗'][j % 4],
-      label: h.substring(0, 6),
-      text: h
-    })),
-    color: i === 0 ? 'accent' : 'secondary'
-  }));
-}
-
-const coreCapabilities = apiServices.length > 0
-  ? generateCoreCapabilities(apiServices)
-  : defaultCoreCapabilities;
-
-// 默认成就数据（邱小亮）
-const defaultAchievements = [
+// 默认成就数据
+const defaultAchievements: Achievement[] = [
   { value: '2500万', label: '数字化转型项目', icon: '📈' },
   { value: '672万', label: '智能系统落地项目', icon: '🤖' },
   { value: '30+', label: '团队管理规模', icon: '👥' },
@@ -123,19 +116,30 @@ const defaultAchievements = [
 ];
 
 // 恋恋的成就数据
-const lianlianAchievements = [
+const lianlianAchievements: Achievement[] = [
   { value: '100+', label: '深度服务家庭', icon: '👨‍👩‍👧‍👦' },
-  { value: '24年', label: '西餐/甜品主厨经验', icon: '👨‍🍳' },
-  { value: '6年', label: '女性健康管理实战', icon: '💪' },
-  { value: '11年', label: '连续创业经验', icon: '🚀' }
+  { value: '24年', label: '西餐/甜品主厨', icon: '👨‍🍳' },
+  { value: '6年', label: '健康管理实战', icon: '💪' },
+  { value: '11年', label: '连续创业', icon: '🚀' }
 ];
 
-// 根据租户选择成就数据
-const achievements = CURRENT_SUBDOMAIN === 'lianlian'
-  ? lianlianAchievements
-  : defaultAchievements;
+// 获取核心能力：优先 API features，然后根据租户选择默认
+const coreCapabilities: CoreCapability[] =
+  (tenantConfig?.features?.coreCapabilities as CoreCapability[])?.length > 0
+    ? tenantConfig.features.coreCapabilities
+    : CURRENT_SUBDOMAIN === 'lianlian'
+      ? lianlianCoreCapabilities
+      : defaultCoreCapabilities;
 
-// 如果 API 有数据则使用，否则使用默认数据
+// 获取成就数据：优先 API features，然后根据租户选择默认
+const achievements: Achievement[] =
+  (tenantConfig?.features?.achievements as Achievement[])?.length > 0
+    ? tenantConfig.features.achievements
+    : CURRENT_SUBDOMAIN === 'lianlian'
+      ? lianlianAchievements
+      : defaultAchievements;
+
+// 资质与头衔
 const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
   icon: honorTypeEmoji[h.type] || '🏆',
   title: h.title,
@@ -150,11 +154,11 @@ const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
 ];
 
 // 站点信息
-const siteName = siteConfig?.name || '邱小亮';
-const siteDescription = siteConfig?.description || '让AI落地企业，让健康有数据支撑';
-const sectionSubtitle = CURRENT_SUBDOMAIN === 'lianlian'
-  ? '以肠为根 · 以轴为核 · 守护卵巢 · 规划一生健康'
-  : '让AI落地企业，让健康有数据支撑';
+const siteName = tenantConfig?.name || '邱小亮';
+const sectionSubtitle = tenantConfig?.seoConfig?.description?.substring(0, 30) ||
+  (CURRENT_SUBDOMAIN === 'lianlian'
+    ? '以肠为根 · 以轴为核 · 守护卵巢 · 规划一生健康'
+    : '让AI落地企业，让健康有数据支撑');
 ---
 
 <section id="about" class="section relative overflow-hidden">
@@ -169,7 +173,7 @@ const sectionSubtitle = CURRENT_SUBDOMAIN === 'lianlian'
       <p class="section-subtitle">{sectionSubtitle}</p>
     </div>
 
-    <!-- 双核心能力卡片 -->
+    <!-- 核心能力卡片 -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-12">
       {coreCapabilities.map((capability) => (
         <div class="card group relative overflow-hidden">
@@ -181,15 +185,9 @@ const sectionSubtitle = CURRENT_SUBDOMAIN === 'lianlian'
           <!-- 能力头部 -->
           <div class="flex items-start gap-4 mb-6">
             <div class={`icon-box ${capability.color === 'accent' ? '' : 'icon-box-secondary'}`}>
-              {capability.id === 'ai' ? (
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-              ) : (
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                </svg>
-              )}
+              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
