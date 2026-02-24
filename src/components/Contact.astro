@@ -1,0 +1,181 @@
+---
+import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
+
+// 从 API 获取租户配置
+async function getSiteConfig() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Failed to fetch site config:', error);
+    return null;
+  }
+}
+
+// 从 API 获取服务数据
+async function getServices() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/services`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Failed to fetch services:', error);
+    return [];
+  }
+}
+
+const siteConfig = await getSiteConfig();
+const apiServices = await getServices();
+
+const siteName = siteConfig?.name || '邱小亮';
+
+// 默认咨询选项
+const defaultOptions = [
+  { value: 'ai', label: '🤖 企业AI智能体部署' },
+  { value: 'health', label: '❤️ 心脑血管健康管理' },
+  { value: 'fusion', label: '🔗 AI+大健康融合' },
+  { value: 'other', label: '💬 其他' }
+];
+
+// 恋恋的咨询选项
+const lianlianOptions = [
+  { value: 'amh', label: '❤️ AMH卵巢抗衰管理' },
+  { value: 'gut', label: '🦠 肠道微生态管理' },
+  { value: 'family', label: '👨‍👩‍👧‍👦 家庭健康规划' },
+  { value: 'other', label: '💬 其他咨询' }
+];
+
+// 从服务数据生成选项
+let consultOptions = defaultOptions;
+if (CURRENT_SUBDOMAIN === 'lianlian') {
+  consultOptions = lianlianOptions;
+} else if (apiServices.length > 0) {
+  consultOptions = apiServices.map((s: any) => ({
+    value: s.slug || s.id,
+    label: `${s.icon === 'heart' ? '❤️' : s.icon === 'activity' ? '🦠' : '💼'} ${s.title}`
+  }));
+  consultOptions.push({ value: 'other', label: '💬 其他咨询' });
+}
+---
+
+<section id="contact" class="section relative overflow-hidden">
+  <!-- 背景装饰 -->
+  <div class="absolute inset-0 tech-grid"></div>
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+
+  <div class="container relative z-10">
+    <div class="text-center mb-12">
+      <span class="data-badge mb-4 inline-flex">立即预约</span>
+      <h2 class="section-title">1v1专属咨询</h2>
+      <p class="section-subtitle">专业服务，精准对接</p>
+    </div>
+
+    <div class="max-w-lg mx-auto">
+      <form class="card p-6 md:p-8">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-text-primary mb-2">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                姓名
+              </span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              placeholder="请输入您的姓名"
+              class="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-text-primary mb-2">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                联系电话
+              </span>
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              required
+              placeholder="请输入您的手机号"
+              class="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-text-primary mb-2">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                咨询需求
+              </span>
+            </label>
+            <select
+              name="service_type"
+              required
+              class="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all"
+            >
+              <option value="">请选择咨询类型</option>
+              {consultOptions.map((opt: any) => (
+                <option value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-text-primary mb-2">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                </svg>
+                额外备注
+              </span>
+            </label>
+            <textarea
+              name="message"
+              rows="3"
+              placeholder="请简要描述您的需求（选填）"
+              class="w-full px-4 py-3 bg-background border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Honey pot 防刷 -->
+          <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" />
+
+          <button
+            type="submit"
+            class="btn btn-accent w-full py-4 text-base font-semibold"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+            提交预约
+          </button>
+        </div>
+
+        <p class="text-center text-text-secondary text-xs mt-4 flex items-center justify-center gap-1">
+          <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          预约提交后，{siteName}会在1个工作日内联系您
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

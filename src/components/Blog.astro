@@ -1,12 +1,10 @@
 ---
-// API 配置
-const API_BASE = import.meta.env.API_BASE || 'http://101.42.36.114:5919';
-const SUBDOMAIN = 'www';
+import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
 
 // 从 API 获取博客数据
 async function getBlogs() {
   try {
-    const res = await fetch(`${API_BASE}/api/v1/public/${SUBDOMAIN}/blogs`, {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/blogs`, {
       headers: { 'Content-Type': 'application/json' }
     });
     if (!res.ok) return [];

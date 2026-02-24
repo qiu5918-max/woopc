@@ -1,12 +1,40 @@
 ---
-// API 配置
-const API_BASE = import.meta.env.API_BASE || 'http://101.42.36.114:5919';
-const SUBDOMAIN = 'www';
+import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
+
+// 从 API 获取租户配置
+async function getSiteConfig() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Failed to fetch site config:', error);
+    return null;
+  }
+}
+
+// 从 API 获取服务数据（用于生成核心能力）
+async function getServices() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/services`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Failed to fetch services:', error);
+    return [];
+  }
+}
 
 // 从 API 获取荣誉数据
 async function getHonors() {
   try {
-    const res = await fetch(`${API_BASE}/api/v1/public/${SUBDOMAIN}/honors`, {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/honors`, {
       headers: { 'Content-Type': 'application/json' }
     });
     if (!res.ok) return [];
@@ -18,6 +46,10 @@ async function getHonors() {
   }
 }
 
+const siteConfig = await getSiteConfig();
+const apiServices = await getServices();
+const apiHonors = await getHonors();
+
 // 荣誉类型 emoji 映射
 const honorTypeEmoji: Record<string, string> = {
   'CERTIFICATE': '🏆',
@@ -27,7 +59,8 @@ const honorTypeEmoji: Record<string, string> = {
   'OTHER': '⭐'
 };
 
-const coreCapabilities = [
+// 默认核心能力（邱小亮）
+const defaultCoreCapabilities = [
   {
     id: 'ai',
     title: '企业AI智能体',
@@ -58,14 +91,49 @@ const coreCapabilities = [
   }
 ];
 
-const achievements = [
+// 从服务数据生成核心能力
+function generateCoreCapabilities(services: any[]) {
+  if (services.length === 0) return defaultCoreCapabilities;
+
+  return services.slice(0, 2).map((s: any, i: number) => ({
+    id: s.slug || `service-${i}`,
+    title: s.title,
+    subtitle: s.subtitle || '',
+    tagline: s.target?.substring(0, 20) || '专业服务',
+    description: s.value || '',
+    highlights: (s.highlights || []).slice(0, 4).map((h: string, j: number) => ({
+      icon: ['💼', '🏥', '📊', '🔗'][j % 4],
+      label: h.substring(0, 6),
+      text: h
+    })),
+    color: i === 0 ? 'accent' : 'secondary'
+  }));
+}
+
+const coreCapabilities = apiServices.length > 0
+  ? generateCoreCapabilities(apiServices)
+  : defaultCoreCapabilities;
+
+// 默认成就数据（邱小亮）
+const defaultAchievements = [
   { value: '2500万', label: '数字化转型项目', icon: '📈' },
   { value: '672万', label: '智能系统落地项目', icon: '🤖' },
   { value: '30+', label: '团队管理规模', icon: '👥' },
   { value: 'TOP1', label: '数据要素大赛金融赛道', icon: '🏆' }
 ];
 
-const apiHonors = await getHonors();
+// 恋恋的成就数据
+const lianlianAchievements = [
+  { value: '100+', label: '深度服务家庭', icon: '👨‍👩‍👧‍👦' },
+  { value: '24年', label: '西餐/甜品主厨经验', icon: '👨‍🍳' },
+  { value: '6年', label: '女性健康管理实战', icon: '💪' },
+  { value: '11年', label: '连续创业经验', icon: '🚀' }
+];
+
+// 根据租户选择成就数据
+const achievements = CURRENT_SUBDOMAIN === 'lianlian'
+  ? lianlianAchievements
+  : defaultAchievements;
 
 // 如果 API 有数据则使用，否则使用默认数据
 const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
@@ -80,6 +148,13 @@ const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
   { icon: '🏛️', title: '数字文旅专家顾问', desc: '重庆市文旅研究会数字文旅专委会' },
   { icon: '🏝️', title: '海南岛AI健康大使', desc: 'AI+健康推广大使' }
 ];
+
+// 站点信息
+const siteName = siteConfig?.name || '邱小亮';
+const siteDescription = siteConfig?.description || '让AI落地企业，让健康有数据支撑';
+const sectionSubtitle = CURRENT_SUBDOMAIN === 'lianlian'
+  ? '以肠为根 · 以轴为核 · 守护卵巢 · 规划一生健康'
+  : '让AI落地企业，让健康有数据支撑';
 ---
 
 <section id="about" class="section relative overflow-hidden">
@@ -90,8 +165,8 @@ const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
     <!-- 标题 -->
     <div class="text-center mb-16">
       <span class="data-badge mb-4 inline-flex">关于我</span>
-      <h2 class="section-title mb-3">双核心能力</h2>
-      <p class="section-subtitle">让AI落地企业，让健康有数据支撑</p>
+      <h2 class="section-title mb-3">核心能力</h2>
+      <p class="section-subtitle">{sectionSubtitle}</p>
     </div>
 
     <!-- 双核心能力卡片 -->
@@ -152,7 +227,7 @@ const credentials = apiHonors.length > 0 ? apiHonors.map((h: any) => ({
         <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
         </svg>
-        项目成就
+        实战成就
       </h3>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         {achievements.map((achievement) => (

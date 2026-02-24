@@ -1,9 +1,32 @@
 ---
+import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
+
 interface Props {
   currentPath?: string;
 }
 
 const { currentPath = '/' } = Astro.props;
+
+// 从 API 获取租户配置
+async function getSiteConfig() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Failed to fetch site config:', error);
+    return null;
+  }
+}
+
+const siteConfig = await getSiteConfig();
+
+// 站点信息
+const siteName = siteConfig?.name || '邱小亮';
+const siteTagline = siteConfig?.seoConfig?.description?.substring(0, 20) || 'AI × 健康数字化';
 
 const navItems = [
   { href: '#about', label: '关于我' },
@@ -23,8 +46,8 @@ const navItems = [
         </svg>
       </div>
       <div class="hidden sm:block">
-        <span class="text-lg font-bold text-text-primary">邱小亮</span>
-        <span class="block text-xs text-text-secondary">AI × 健康数字化</span>
+        <span class="text-lg font-bold text-text-primary">{siteName}</span>
+        <span class="block text-xs text-text-secondary">{siteTagline}</span>
       </div>
     </a>
 

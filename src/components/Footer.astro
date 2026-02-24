@@ -1,7 +1,43 @@
 ---
+import { CURRENT_SUBDOMAIN, API_BASE } from '../lib/tenant-config';
+
 const currentYear = new Date().getFullYear();
 
-const tags = [
+// 从 API 获取租户配置
+async function getSiteConfig() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.data;
+  } catch (error) {
+    console.error('Failed to fetch site config:', error);
+    return null;
+  }
+}
+
+// 从 API 获取荣誉数据用于标签
+async function getHonors() {
+  try {
+    const res = await fetch(`${API_BASE}/api/v1/public/${CURRENT_SUBDOMAIN}/honors`, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error('Failed to fetch honors:', error);
+    return [];
+  }
+}
+
+const siteConfig = await getSiteConfig();
+const apiHonors = await getHonors();
+
+// 默认标签（邱小亮）
+const defaultTags = [
   { label: '企业AI智能体实施部署专家', color: 'accent' },
   { label: '心脑血管健康数字化管理实践者', color: 'secondary' },
   { label: '系统架构师', color: 'primary' },
@@ -9,9 +45,23 @@ const tags = [
   { label: '海南岛AI健康大使', color: 'secondary' },
 ];
 
+// 从荣誉生成标签
+const tags = apiHonors.length > 0
+  ? apiHonors.slice(0, 5).map((h: any, i: number) => ({
+      label: h.title.length > 15 ? h.title.substring(0, 15) + '...' : h.title,
+      color: i % 3 === 0 ? 'accent' : i % 3 === 1 ? 'secondary' : 'primary'
+    }))
+  : defaultTags;
+
+// 站点信息
+const siteName = siteConfig?.name || '邱小亮';
+const siteTagline = siteConfig?.seoConfig?.description?.substring(0, 20) || 'AI × 健康数字化';
+const siteDescription = siteConfig?.description || '承接企业AI智能体定制部署、心脑血管健康数字化管理、AI+大健康融合解决方案的定制与落地，欢迎政企/企业/大健康机构洽谈合作。';
+
+// 联系方式
 const contactInfo = {
-  phone: '17326050425',
-  email: 'qxl5918@126.com',
+  phone: siteConfig?.contactConfig?.phone || '17326050425',
+  email: siteConfig?.contactConfig?.email || 'qxl5918@126.com',
 };
 
 const quickLinks = [
@@ -41,12 +91,12 @@ const quickLinks = [
             </svg>
           </div>
           <div>
-            <span class="text-xl font-bold text-text-primary">邱小亮</span>
-            <span class="block text-xs text-text-secondary">AI × 健康数字化</span>
+            <span class="text-xl font-bold text-text-primary">{siteName}</span>
+            <span class="block text-xs text-text-secondary">{siteTagline}</span>
           </div>
         </div>
         <p class="text-text-secondary text-sm leading-relaxed max-w-md mb-5">
-          承接企业AI智能体定制部署、心脑血管健康数字化管理、AI+大健康融合解决方案的定制与落地，欢迎政企/企业/大健康机构洽谈合作。
+          {siteDescription}
         </p>
         <!-- 核心定位标签 -->
         <div class="flex flex-wrap gap-2">
@@ -126,14 +176,14 @@ const quickLinks = [
     <div class="border-t border-border pt-6">
       <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
         <p class="text-text-secondary text-xs">
-          ©{currentYear} 邱小亮 · 企业AI智能体+心脑血管健康双核心个人IP
+          ©{currentYear} {siteName} · {siteTagline}
         </p>
         <div class="flex items-center gap-4">
           <p class="text-text-secondary/60 text-xs flex items-center gap-1">
             <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            用AI落地能力+数字化思维
+            {siteTagline}
           </p>
           <!-- 登录管理后台按钮 -->
           <a
