@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import AnalyticsTracker from '../components/AnalyticsTracker.astro';
+import FloatingWidget from '../components/FloatingWidget.astro';
 import { CURRENT_SUBDOMAIN, API_BASE, getTenantConfig, getBrandColors } from '../lib/tenant-config';
 
 interface Props {
@@ -78,5 +80,7 @@ const fullTitle = title === siteName ? title : `${title} | ${siteName}`;
       <slot />
     </main>
     <Footer />
+    <AnalyticsTracker />
+    <FloatingWidget />
   </body>
 </html>

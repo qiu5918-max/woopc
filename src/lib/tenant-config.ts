@@ -3,6 +3,9 @@
 // API 基础地址
 export const API_BASE = 'http://101.42.36.114:5919';
 
+// 埋点 API 端点
+export const TRACKING_ENDPOINT = `${API_BASE}/api/v1/track`;
+
 // 默认 subdomain
 export const DEFAULT_SUBDOMAIN = 'www';
 
@@ -40,6 +43,9 @@ function getSubdomainFromDomain(): string {
 
 // 当前租户 subdomain
 export const CURRENT_SUBDOMAIN = getSubdomainFromDomain();
+
+// 导出当前租户 ID（与 subdomain 相同）
+export const TENANT_ID = CURRENT_SUBDOMAIN;
 
 // 租户配置类型
 export interface TenantConfig {

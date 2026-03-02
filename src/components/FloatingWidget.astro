@@ -1,0 +1,240 @@
+---
+/**
+ * 浮窗引导组件
+ * - 所有租户网站通用
+ * - 引导访客"一键创建自己的获客微名片"
+ * - 跳转到 /quick-start 页面
+ */
+---
+
+<div id="floating-widget" class="floating-widget hidden">
+  <a
+    href="/quick-start"
+    class="floating-widget__link"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="floating-widget__icon">✨</span>
+    <span class="floating-widget__text">创建我的获客微名片</span>
+  </a>
+  <button class="floating-widget__close" aria-label="关闭">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .floating-widget {
+    position: fixed;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .floating-widget.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .floating-widget.hidden {
+    display: none;
+  }
+
+  /* 桌面端：右下角 */
+  @media (min-width: 768px) {
+    .floating-widget {
+      bottom: 24px;
+      right: 24px;
+    }
+
+    .floating-widget:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(102, 126, 234, 0.5);
+    }
+  }
+
+  /* 移动端：底部居中 */
+  @media (max-width: 767px) {
+    .floating-widget {
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .floating-widget.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+
+  .floating-widget__link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .floating-widget__icon {
+    font-size: 1.125rem;
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  @keyframes sparkle {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+  }
+
+  .floating-widget__text {
+    line-height: 1.2;
+  }
+
+  .floating-widget__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 0.25rem;
+  }
+
+  .floating-widget__close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+  }
+
+  .floating-widget__close svg {
+    width: 12px;
+    height: 12px;
+  }
+</style>
+
+<script>
+  // 存储键名
+  const WIDGET_DISMISSED_KEY = '_wd';
+
+  /**
+   * 获取存储的值
+   */
+  function getStorageItem(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * 设置存储的值
+   */
+  function setStorageItem(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // ignore
+    }
+  }
+
+  /**
+   * 检查浮窗是否已被关闭
+   */
+  function isWidgetDismissed() {
+    const data = getStorageItem(WIDGET_DISMISSED_KEY);
+    if (!data) return false;
+
+    try {
+      const { exp } = JSON.parse(data);
+      return Date.now() < exp;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * 设置浮窗已关闭（7天内不再显示）
+   */
+  function setWidgetDismissed() {
+    const SEVEN_DAYS = 7 * 24 * 60 * 60 * 1000;
+    setStorageItem(
+      WIDGET_DISMISSED_KEY,
+      JSON.stringify({ exp: Date.now() + SEVEN_DAYS })
+    );
+  }
+
+  /**
+   * 显示浮窗
+   */
+  function showWidget() {
+    const widget = document.getElementById('floating-widget');
+    if (widget) {
+      widget.classList.remove('hidden');
+      // 延迟添加 visible 类以触发动画
+      requestAnimationFrame(() => {
+        widget.classList.add('visible');
+      });
+    }
+  }
+
+  /**
+   * 隐藏浮窗
+   */
+  function hideWidget() {
+    const widget = document.getElementById('floating-widget');
+    if (widget) {
+      widget.classList.remove('visible');
+      setTimeout(() => {
+        widget.classList.add('hidden');
+      }, 300);
+    }
+  }
+
+  // 初始化
+  document.addEventListener('DOMContentLoaded', () => {
+    // 检查是否已关闭
+    if (isWidgetDismissed()) {
+      return;
+    }
+
+    // 3秒后显示浮窗
+    setTimeout(() => {
+      showWidget();
+    }, 3000);
+
+    // 关闭按钮事件
+    const closeBtn = document.querySelector('.floating-widget__close');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setWidgetDismissed();
+        hideWidget();
+      });
+    }
+  });
+</script>
