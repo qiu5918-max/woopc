@@ -16,7 +16,11 @@ const DOMAIN_MAPPING: Record<string, string> = {
   'lianlian.woopc.com': 'lianlian',
   'lianlianwoopc.com': 'lianlian',
   'www.lianlianwoopc.com': 'lianlian',
+  'qxl.woopc.com': 'qxl',
 };
+
+// 管理后台地址（用于浮窗跳转）
+export const ADMIN_BASE_URL = 'http://101.42.36.114:5920';
 
 // 构建时设置的 subdomain（通过 sed 替换此值）
 export const BUILD_SUBDOMAIN = 'www';

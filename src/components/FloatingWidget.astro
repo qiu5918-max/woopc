@@ -3,13 +3,14 @@
  * 浮窗引导组件
  * - 所有租户网站通用
  * - 引导访客"一键创建自己的获客微名片"
- * - 跳转到 /quick-start 页面
+ * - 跳转到管理后台的快速创建页面
  */
+import { ADMIN_BASE_URL } from '../lib/tenant-config';
 ---
 
 <div id="floating-widget" class="floating-widget hidden">
   <a
-    href="/quick-start"
+    href={`${ADMIN_BASE_URL}/quick-start`}
     class="floating-widget__link"
     target="_blank"
     rel="noopener noreferrer"
